@@ -5,7 +5,7 @@ import java.security.Key;
 import javax.crypto.Cipher;
 
 public class ManejadorCifrado {
-    public static byte[] cifrar(Key llave, String algoritmo, String texto) {
+    public static String cifrar(Key llave, String algoritmo, String texto) {
         byte[] textoCifrado;
 
         try {
@@ -15,7 +15,7 @@ public class ManejadorCifrado {
             cifrador.init(Cipher.ENCRYPT_MODE, llave);
             textoCifrado = cifrador.doFinal(textoClaro);
 
-            return textoCifrado;
+            return new String(textoCifrado);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
