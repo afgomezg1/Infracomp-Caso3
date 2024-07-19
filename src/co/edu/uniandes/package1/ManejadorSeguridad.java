@@ -1,10 +1,11 @@
 package co.edu.uniandes.package1;
 
 import java.security.Key;
+import java.security.MessageDigest;
 
 import javax.crypto.Cipher;
 
-public class ManejadorCifrado {
+public class ManejadorSeguridad {
     public static String cifrar(Key llave, String algoritmo, String texto) {
         byte[] textoCifrado;
 
@@ -36,4 +37,15 @@ public class ManejadorCifrado {
             return null;
         }
     }
+
+    public static byte[] getDigest(byte[] buffer) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.update(buffer);
+            return digest.digest();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
