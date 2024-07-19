@@ -38,10 +38,10 @@ public class ManejadorSeguridad {
         }
     }
 
-    public static byte[] getDigest(byte[] buffer) {
+    public static byte[] getDigest(byte[] datos) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            digest.update(buffer);
+            digest.update(datos);
             return digest.digest();
         } catch (Exception e) {
             return null;
