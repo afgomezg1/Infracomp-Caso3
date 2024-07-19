@@ -22,7 +22,7 @@ public class ManejadorCifrado {
         }
     }
 
-    public String descifrar(Key llave, String algoritmo, byte[] textoCifrado) {
+    public static String descifrar(Key llave, String algoritmo, byte[] textoCifrado) {
         byte[] textoClaro;
 
         try {
