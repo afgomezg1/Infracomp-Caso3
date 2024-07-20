@@ -61,17 +61,16 @@ public class ProtocoloCliente {
 
             pOut.println("ACK");
 
-
             byte[] kBytes = respuestaEstado.getBytes(StandardCharsets.UTF_8);
-            byte[] digest = ManejadorSeguridad.getDigest(kBytes);
 
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(llaveSimetrica);
 
-            byte[] hmac = mac.doFinal(digest);
+            String HMACString = Base64.getEncoder().encodeToString(kBytes);
 
-            byte[] hmacRespuesta = Base64.getDecoder().decode(pIn.readLine());
-            if (Arrays.equals(hmac, hmacRespuesta)) {
+            String hmacRespuesta = pIn.readLine();
+
+            if (HMACString.equals(hmacRespuesta)) {
                 switch (id) {
                     case 0:
                         System.out.println("========== Respuesta al Cliente" + " ==========");

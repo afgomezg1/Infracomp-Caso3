@@ -103,12 +103,11 @@ public class ProtocoloServidor
             pIn.readLine();
 
             byte[] kBytes = estado.getBytes(StandardCharsets.UTF_8);
-            byte[] digest = ManejadorSeguridad.getDigest(kBytes);
 
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(llaveSimetrica);
-            byte[] hmacBytes = mac.doFinal(digest);
-            String HMACString = Base64.getEncoder().encodeToString(hmacBytes);
+
+            String HMACString = Base64.getEncoder().encodeToString(kBytes);
             pOut.println(HMACString);
 
             pIn.readLine();
