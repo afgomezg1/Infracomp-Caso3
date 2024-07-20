@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Servidor
@@ -79,11 +78,6 @@ public class Servidor
         catch (IOException e)
         {
             e.printStackTrace();
-        }
-
-
-        for (Map.Entry<String, List<String>> entry : hashMap.entrySet()) {
-            System.out.println("ID: " + entry.getKey() + " Valores: " + entry.getValue());
         }
 
         return hashMap;

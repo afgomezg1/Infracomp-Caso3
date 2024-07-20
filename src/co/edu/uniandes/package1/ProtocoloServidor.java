@@ -35,6 +35,7 @@ public class ProtocoloServidor
 
             String reto = pIn.readLine();
 
+
             String cifradoAutenticacion = ManejadorSeguridad.cifrar(llavePrivada, ALGORITMO_ASIMETRICO, reto);
             pOut.println(cifradoAutenticacion);
 
