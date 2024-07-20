@@ -116,7 +116,6 @@ public class Servidor
     private static void correrServidorIterativo() throws IOException
     {
         ServerSocket ss = null;
-        boolean continuar = true;
         BufferedReader pIn = null;
 		PrintWriter pOut = null;
 
