@@ -37,11 +37,11 @@ public class ProtocoloServidor
             String cifradoAutenticacion = ManejadorSeguridad.cifrar(llavePrivada, ALGORITMO_ASIMETRICO, reto);
             pOut.println(cifradoAutenticacion);
 
-            String llaveSimetricaCifrada = pIn.readLine();
+            String llaveS = ManejadorSeguridad.descifrar(llavePrivada, ALGORITMO_ASIMETRICO, pIn.readLine());
 
-            byte[] decodedKey = Base64.getDecoder().decode(llaveSimetricaCifrada);
+            byte[] decodedKey = Base64.getDecoder().decode(llaveS);
 
-            SecretKey llaveSimetrica = new SecretKeySpec(decodedKey, ALGORITMO_SIMETRICO);
+            SecretKey llaveSimetrica = new SecretKeySpec(decodedKey, "AES");
 
             pOut.println("ACK");
 

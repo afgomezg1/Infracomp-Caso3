@@ -44,12 +44,9 @@ public class ProtocoloCliente {
             }
 
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+            keyGen.init(256);
             SecretKey llaveSimetrica = keyGen.generateKey();
-
-            String encodedKey = Base64.getEncoder().encodeToString(llaveSimetrica.getEncoded());
-
-
-            pOut.println(ManejadorSeguridad.cifrar(llavePublica, ALGORITMO_ASIMETRICO, encodedKey));
+            pOut.println(ManejadorSeguridad.cifrar(llavePublica, ALGORITMO_ASIMETRICO, Base64.getEncoder().encodeToString(llaveSimetrica.getEncoded())));
 
             pIn.readLine();
 
