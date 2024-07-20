@@ -2,8 +2,8 @@ package co.edu.uniandes.package1;
 
 import java.security.Key;
 import java.security.MessageDigest;
-
 import javax.crypto.Cipher;
+
 
 public class ManejadorSeguridad {
     public static String cifrar(Key llave, String algoritmo, String texto) {
@@ -47,5 +47,5 @@ public class ManejadorSeguridad {
             return null;
         }
     }
-
 }
+

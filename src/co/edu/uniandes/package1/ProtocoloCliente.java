@@ -17,7 +17,7 @@ public class ProtocoloCliente {
 
     public static void procesar(BufferedReader stdIn, BufferedReader pIn, PrintWriter pOut, String numeroDocumento, String tipoDocumento, String idProd, int id) throws IOException{
         try {
-            FileInputStream archivoPublica = new FileInputStream("data\\publica");
+            FileInputStream archivoPublica = new FileInputStream("data/publica");
             ObjectInputStream ois = new ObjectInputStream(archivoPublica);
             SecretKey llavePublica = (SecretKey) ois.readObject();
             ois.close();

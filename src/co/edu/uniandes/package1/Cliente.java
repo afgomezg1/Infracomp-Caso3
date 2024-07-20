@@ -11,8 +11,7 @@ import java.util.Scanner;
 public class Cliente {
     public static final int PUERTO = 3400;
     public static final String SERVIDOR = "localhost";
-    private static final String dirArchivo = "data\\datosCliente.txt";
-
+    private static final String dirArchivo = "data/datosCliente.txt";
     public static void main(String[] args) throws IOException{
         System.out.println("Iniciando cliente...");
 
