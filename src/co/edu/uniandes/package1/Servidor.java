@@ -18,7 +18,7 @@ public class Servidor
     public static final String SERVIDOR = "localhost";
     private static final String dirArchivo = "data/datosServidor.txt";
     private static int count;
-
+    private static HashMap<String, List<String>> hashMap;
 
     public static void main(String[] args) throws IOException
     {
@@ -28,6 +28,7 @@ public class Servidor
 
         boolean menu = true;
         while (menu) {
+            hashMap = leerArchivo(dirArchivo);
             System.out.println("Ingrese si desea correr el Servidor en modo iterativo (1) o con delegados (2): ");
             int modo = in.nextInt();
 
@@ -53,7 +54,7 @@ public class Servidor
         in.close();
     }
 
-    public static HashMap<String, List<String>> leerArchivo(String csvFile)
+    private static HashMap<String, List<String>> leerArchivo(String csvFile)
     {
         String line;
         String csvSplitBy = ",";
@@ -103,7 +104,7 @@ public class Servidor
         while (cantidadServidores > 0)
         {
             Socket socket = ss.accept();
-            ThreadServidor thread = new ThreadServidor (socket, count, leerArchivo(dirArchivo));
+            ThreadServidor thread = new ThreadServidor (socket, count, hashMap);
             cantidadServidores--;
             count++;
 
