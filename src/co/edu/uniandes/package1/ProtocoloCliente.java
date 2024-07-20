@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.security.PublicKey;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Random;
 
 import javax.crypto.KeyGenerator;
@@ -45,7 +46,10 @@ public class ProtocoloCliente {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
             SecretKey llaveSimetrica = keyGen.generateKey();
 
-            pOut.println(ManejadorSeguridad.cifrar(llavePublica, ALGORITMO_ASIMETRICO, llaveSimetrica.toString()));
+            String encodedKey = Base64.getEncoder().encodeToString(llaveSimetrica.getEncoded());
+
+
+            pOut.println(ManejadorSeguridad.cifrar(llavePublica, ALGORITMO_ASIMETRICO, encodedKey));
 
             pIn.readLine();
 

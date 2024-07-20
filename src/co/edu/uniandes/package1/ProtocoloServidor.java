@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +39,9 @@ public class ProtocoloServidor
 
             String llaveSimetricaCifrada = pIn.readLine();
 
-            String llaveS = ManejadorSeguridad.descifrar(llavePrivada, ALGORITMO_ASIMETRICO, llaveSimetricaCifrada);
+            byte[] decodedKey = Base64.getDecoder().decode(llaveSimetricaCifrada);
 
-            byte[] keyBytes = llaveS.getBytes(StandardCharsets.UTF_8);
-
-            SecretKey llaveSimetrica = new SecretKeySpec(keyBytes, ALGORITMO_SIMETRICO);
+            SecretKey llaveSimetrica = new SecretKeySpec(decodedKey, ALGORITMO_SIMETRICO);
 
             pOut.println("ACK");
 
