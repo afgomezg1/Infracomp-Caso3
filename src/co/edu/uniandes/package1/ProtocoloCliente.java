@@ -5,12 +5,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
 
 import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 
 public class ProtocoloCliente {
@@ -63,7 +64,18 @@ public class ProtocoloCliente {
 
             pOut.println("ACK");
 
-            if (Arrays.equals(pIn.readLine().getBytes(), ManejadorSeguridad.getDigest(respuestaEstado.getBytes()))) {
+
+            byte[] kBytes = respuestaEstado.getBytes(StandardCharsets.UTF_8);
+            byte[] digest = ManejadorSeguridad.getDigest(kBytes);
+
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(llaveSimetrica);
+
+            byte[] hmacBytes = mac.doFinal(digest);
+
+            String HMACString = Base64.getEncoder().encodeToString(hmacBytes);
+
+            if (pIn.readLine().equals(HMACString)) {
                 switch (id) {
                     case 0:
                         System.out.println("========== Respuesta al Cliente" + " ==========");

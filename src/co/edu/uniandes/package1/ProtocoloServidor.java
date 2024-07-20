@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -95,8 +96,17 @@ public class ProtocoloServidor
             pIn.readLine();
 
             byte[] kBytes = estado.getBytes(StandardCharsets.UTF_8);
-            byte[] Hmac = ManejadorSeguridad.getDigest(kBytes);
-            String HMACString = new String(Hmac);//TODO: Posiblemente puede haber problemas por usar new String, quizá se necesite Base64
+            byte[] digest = ManejadorSeguridad.getDigest(kBytes);
+
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(llaveSimetrica);
+
+            byte[] hmacBytes = mac.doFinal(digest);
+
+            String HMACString = Base64.getEncoder().encodeToString(hmacBytes);
+
+
+
 
             pOut.println(ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, HMACString));
 
