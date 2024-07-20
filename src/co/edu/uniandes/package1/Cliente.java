@@ -28,7 +28,7 @@ public class Cliente {
                     menu = false;
                     break;
                 case 2:
-                    System.out.println("Ingrese la cantidad de clientes que quiere ejecutar: ");
+                    System.out.println("Ingrese la cantidad de clientes delegados que quiere ejecutar: ");
                     int cantidadClientes = in.nextInt();
                     correrClienteDelegados(cantidadClientes);
                     menu = false;
@@ -48,7 +48,7 @@ public class Cliente {
         BufferedReader pIn = null;
 		PrintWriter pOut = null;
 
-		System.out.println("Comienza cliente iterativo");
+		System.out.println("Inicia cliente iterativo");
 
 		try {
 			socket = new Socket(SERVIDOR, PUERTO);

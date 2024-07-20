@@ -13,7 +13,7 @@ public class ThreadServidor extends Thread {
     private int id;
     private HashMap<String, List<String>> hashMap;
 
-    public ThreadServidor(Socket sktCliente, int id, HashMap<String, List<String>> hashMap) 
+    public ThreadServidor(Socket sktCliente, int id, HashMap<String, List<String>> hashMap)
     {
         this.sktCliente = sktCliente;
         this.id = id;
@@ -21,14 +21,14 @@ public class ThreadServidor extends Thread {
     }
 
     @Override
-    public void run() 
+    public void run()
     {
-        System.out.println("Inicio de un nuevo thread: " + id);
+        System.out.println("Inicia servidor delegado " + id);
 
         BufferedReader pIn = null;
 		PrintWriter pOut = null;
 
-        try 
+        try
         {
             pIn = new BufferedReader(new InputStreamReader(sktCliente.getInputStream()));
             pOut = new PrintWriter(sktCliente.getOutputStream(), true);
@@ -38,8 +38,8 @@ public class ThreadServidor extends Thread {
             pIn.close();
             pOut.close();
             stdIn.close();
-        } 
-        catch (IOException e) 
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             System.exit(-1);

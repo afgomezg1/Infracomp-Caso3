@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
 
@@ -71,22 +72,26 @@ public class ProtocoloCliente {
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(llaveSimetrica);
 
-            byte[] hmacBytes = mac.doFinal(digest);
+            byte[] hmac = mac.doFinal(digest);
 
-            String HMACString = Base64.getEncoder().encodeToString(hmacBytes);
-            Object obj = new Object();
-            synchronized(obj)
-            {
-            if (pIn.readLine().equals(HMACString)) 
-            {
-                System.out.println("========== Respuesta al Cliente " + id + " ==========\n" + "Estado del producto: " + respuestaEstado);
-                System.out.println();
+            byte[] hmacRespuesta = Base64.getDecoder().decode(pIn.readLine());
+            if (Arrays.equals(hmac, hmacRespuesta)) {
+                switch (id) {
+                    case 0:
+                        System.out.println("========== Respuesta al Cliente" + " ==========");
+                        System.out.println("Estado del producto: " + respuestaEstado);
+                        System.out.println();
+                        break;
+
+                    default:
+                        System.out.println("========== Respuesta al Cliente " + id + " ==========" + "\n" + "Estado del producto: " + respuestaEstado + "\n");
+                        break;
+                }
                 pOut.println("TERMINAR");
             } else {
                 System.out.println("Error en la transmision, intente de nuevo");
                 System.exit(-1);
             }
-        }
 
         } catch (Exception e) {
             e.printStackTrace();

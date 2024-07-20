@@ -26,7 +26,7 @@ public class ThreadCliente extends Thread {
         BufferedReader pIn = null;
 		PrintWriter pOut = null;
 
-		System.out.println("Comienza cliente iterativo");
+		System.out.println("Inica cliente delegado " + ID);
 
 		try {
 			socket = new Socket(Cliente.SERVIDOR, Cliente.PUERTO);
