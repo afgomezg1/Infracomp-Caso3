@@ -36,7 +36,7 @@ public class ProtocoloServidor
             String cifradoAutenticacion = ManejadorSeguridad.cifrar(llavePrivada, ALGORITMO_ASIMETRICO, reto);
             pOut.println(cifradoAutenticacion);
 
-            byte[] llaveSimetricaCifrada = pIn.readLine().getBytes();
+            String llaveSimetricaCifrada = pIn.readLine();
 
             String llaveS = ManejadorSeguridad.descifrar(llavePrivada, ALGORITMO_ASIMETRICO, llaveSimetricaCifrada);
 
@@ -71,7 +71,7 @@ public class ProtocoloServidor
                 System.exit(-1);
             }
 
-            byte[] idProd = pIn.readLine().getBytes();
+            String idProd = pIn.readLine();
             String idProdString = ManejadorSeguridad.descifrar(llaveSimetrica, ALGORITMO_SIMETRICO, idProd);
 
             boolean found = false;
@@ -98,7 +98,7 @@ public class ProtocoloServidor
 
             byte[] kBytes = estado.getBytes(StandardCharsets.UTF_8);
             byte[] Hmac = ManejadorSeguridad.getDigest(kBytes);
-            String HMACString = new String(Hmac);
+            String HMACString = new String(Hmac);//TODO: Posiblemente puede haber problemas por usar new String, quizá se necesite Base64
 
             pOut.println(ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, HMACString));
 

@@ -29,13 +29,13 @@ public class ProtocoloCliente {
 
             Random random = new Random();
 
-            int longitudReto = random.nextBoolean() ? 24 : 32;
+            int longitudReto = random.nextBoolean() ? 24 : 32;//TODO: Meter a generarReto
 
             String reto = generarReto(longitudReto);
 
             pOut.println(reto);
 
-            byte[] respuestaReto = pIn.readLine().getBytes();
+            String respuestaReto = pIn.readLine();
 
             if (!ManejadorSeguridad.descifrar(llavePublica, ALGORITMO_ASIMETRICO, respuestaReto).equals(reto)) {
                 System.out.println("Error en la transmision, intente de nuevo");
@@ -58,7 +58,7 @@ public class ProtocoloCliente {
 
             pOut.println(ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, idProd));
 
-            String respuestaEstado = ManejadorSeguridad.descifrar(llaveSimetrica, ALGORITMO_SIMETRICO, pIn.readLine().getBytes());
+            String respuestaEstado = ManejadorSeguridad.descifrar(llaveSimetrica, ALGORITMO_SIMETRICO, pIn.readLine());
 
             pOut.println("ACK");
 
