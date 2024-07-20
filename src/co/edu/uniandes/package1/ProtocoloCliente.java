@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
 
