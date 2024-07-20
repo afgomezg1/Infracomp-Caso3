@@ -132,40 +132,39 @@ public class Servidor
             System.exit(-1);
         }
 
-        while (continuar)
+      
+        Socket socket = ss.accept();
+
+        try
         {
-            Socket socket = ss.accept();
-
-            try
-            {
-                pIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                pOut = new PrintWriter(socket.getOutputStream(), true);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-
-            HashMap<String, List<String>> hashMap = leerArchivo(dirArchivo);
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-            for (int i = 0; i < 32; i++)
-            {
-                ProtocoloServidor.procesar(stdIn, pIn, pOut, hashMap, i);
-            }
-
-            try
-            {
-                stdIn.close();
-                pIn.close();
-                pOut.close();
-                socket.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-                System.exit(-1);
-            }
+            pIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            pOut = new PrintWriter(socket.getOutputStream(), true);
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+        HashMap<String, List<String>> hashMap = leerArchivo(dirArchivo);
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        for (int i = 0; i < 32; i++)
+        {
+            ProtocoloServidor.procesar(stdIn, pIn, pOut, hashMap, i);
+        }
+
+        try
+        {
+            stdIn.close();
+            pIn.close();
+            pOut.close();
+            socket.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        
     }
 }
