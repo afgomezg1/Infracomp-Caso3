@@ -89,7 +89,6 @@ public class Servidor
     {
         ServerSocket ss = null;
 
-        System.out.println("Inicia Servidor iterativo");
         try
         {
             ss = new ServerSocket(PUERTO);
