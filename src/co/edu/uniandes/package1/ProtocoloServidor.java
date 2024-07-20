@@ -35,8 +35,10 @@ public class ProtocoloServidor
 
             String reto = pIn.readLine();
 
-
+            long timepoInicialAsimetrico = System.nanoTime();
             String cifradoAutenticacion = ManejadorSeguridad.cifrar(llavePrivada, ALGORITMO_ASIMETRICO, reto);
+            long tiempoFinalAsimetrico = System.nanoTime();
+
             pOut.println(cifradoAutenticacion);
 
             String llaveS = ManejadorSeguridad.descifrar(llavePrivada, ALGORITMO_ASIMETRICO, pIn.readLine());
@@ -44,6 +46,10 @@ public class ProtocoloServidor
             byte[] decodedKey = Base64.getDecoder().decode(llaveS);
 
             SecretKey llaveSimetrica = new SecretKeySpec(decodedKey, "AES");
+
+            long timepoInicialSimetrico = System.nanoTime();
+            ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, reto);
+            long tiempoFinalSimetrico = System.nanoTime();
 
             pOut.println("ACK");
 
@@ -106,6 +112,8 @@ public class ProtocoloServidor
             pOut.println(HMACString);
 
             pIn.readLine();
+
+            System.out.println("Consulta " + id + "\nTiempo asimetrico: " + (tiempoFinalAsimetrico - timepoInicialAsimetrico) + "\nTiempo simetrico: " + (tiempoFinalSimetrico - timepoInicialSimetrico) + "\n");
         }
         catch (Exception e)
         {
