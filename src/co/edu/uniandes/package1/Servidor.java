@@ -62,7 +62,6 @@ public class Servidor
         HashMap<String, List<String>> hashMap = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile)))
         {
-            br.readLine();
             while ((line = br.readLine()) != null)
             {
                 String[] elements = line.split(csvSplitBy);

@@ -46,22 +46,21 @@ public class ProtocoloServidor
 
             pOut.println("ACK");
 
-            byte[] infoCliente = pIn.readLine().getBytes();
-            String infoClienteString = new String(infoCliente);
-
+            String infoClienteString = ManejadorSeguridad.descifrar(llavePrivada, ALGORITMO_ASIMETRICO, pIn.readLine());
             String[] info = infoClienteString.split(";");
             String idDoc = info[0];
             String infoDoc = info[1];
             List<String> list = hashMap.get(idDoc);
             if (list != null)
             {
-                if(list.get(0) == infoDoc)
+                if(list.get(0).equals(infoDoc))
                 {
                     pOut.println("ACK");
                 }
                 else
                 {
                     pOut.println("ERROR");
+                    System.out.println("llega");
                     System.exit(-1);
                 }
             }
