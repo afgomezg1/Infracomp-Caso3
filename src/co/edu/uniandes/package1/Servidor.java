@@ -130,7 +130,7 @@ public class Servidor
             System.exit(-1);
         }
 
-      
+
         Socket socket = ss.accept();
 
         try
@@ -163,6 +163,6 @@ public class Servidor
             e.printStackTrace();
             System.exit(-1);
         }
-        
+
     }
 }

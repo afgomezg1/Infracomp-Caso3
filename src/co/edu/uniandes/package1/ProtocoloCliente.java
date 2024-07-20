@@ -30,11 +30,7 @@ public class ProtocoloCliente {
 
             pIn.readLine();
 
-            Random random = new Random();
-
-            int longitudReto = random.nextBoolean() ? 24 : 32;//TODO: Meter a generarReto
-
-            String reto = generarReto(longitudReto);
+            String reto = generarReto();
 
             pOut.println(reto);
 
@@ -99,8 +95,10 @@ public class ProtocoloCliente {
         }
     }
 
-    private static String generarReto(int longitudReto) {
+    private static String generarReto() {
         Random random = new Random();
+        int longitudReto = random.nextBoolean() ? 24 : 32;
+
         StringBuilder reto = new StringBuilder();
 
         for (int i = 0; i < longitudReto; i++) {
