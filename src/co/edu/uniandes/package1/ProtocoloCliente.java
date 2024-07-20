@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class ProtocoloCliente {
         try {
             FileInputStream archivoPublica = new FileInputStream("data/publica");
             ObjectInputStream ois = new ObjectInputStream(archivoPublica);
-            SecretKey llavePublica = (SecretKey) ois.readObject();
+            PublicKey llavePublica = (PublicKey) ois.readObject();
             ois.close();
 
             pOut.println("INICIO");

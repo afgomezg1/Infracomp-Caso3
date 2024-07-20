@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Servidor 
+public class Servidor
 {
     public static final int PUERTO = 3400;
     public static final String SERVIDOR = "localhost";
@@ -60,24 +60,24 @@ public class Servidor
         String csvSplitBy = ",";
 
         HashMap<String, List<String>> hashMap = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile)))
         {
-            br.readLine(); 
-            while ((line = br.readLine()) != null) 
+            br.readLine();
+            while ((line = br.readLine()) != null)
             {
                 String[] elements = line.split(csvSplitBy);
                 String id = elements[0];
 
                 List<String> values = new ArrayList<>();
-                for (int i = 1; i < elements.length; i++) 
+                for (int i = 1; i < elements.length; i++)
                 {
                     values.add(elements[i]);
                 }
 
                 hashMap.put(id, values);
             }
-        } 
-        catch (IOException e) 
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -107,7 +107,7 @@ public class Servidor
         }
 
         count = 1;
-        while (cantidadServidores > 0) 
+        while (cantidadServidores > 0)
         {
             Socket socket = ss.accept();
             ThreadServidor thread = new ThreadServidor (socket, count, leerArchivo(dirArchivo));
@@ -137,17 +137,17 @@ public class Servidor
             e.printStackTrace();
             System.exit(-1);
         }
-        
-        while (continuar) 
+
+        while (continuar)
         {
             Socket socket = ss.accept();
-            
-            try 
+
+            try
             {
                 pIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 pOut = new PrintWriter(socket.getOutputStream(), true);
-            } 
-            catch (IOException e) 
+            }
+            catch (IOException e)
             {
                 e.printStackTrace();
                 System.exit(-1);
@@ -155,19 +155,19 @@ public class Servidor
 
             HashMap<String, List<String>> hashMap = leerArchivo(dirArchivo);
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-            for (int i = 0; i < 32; i++) 
+            for (int i = 0; i < 32; i++)
             {
                 ProtocoloServidor.procesar(stdIn, pIn, pOut, hashMap, i);
             }
-    
-            try 
+
+            try
             {
                 stdIn.close();
                 pIn.close();
                 pOut.close();
                 socket.close();
-            } 
-            catch (IOException e) 
+            }
+            catch (IOException e)
             {
                 e.printStackTrace();
                 System.exit(-1);

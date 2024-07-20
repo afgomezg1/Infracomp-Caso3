@@ -6,46 +6,35 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class ProtocoloServidor 
+public class ProtocoloServidor
 {
     private static final String ALGORITMO_ASIMETRICO = "RSA";
     private static final String ALGORITMO_SIMETRICO = "AES/ECB/PKCS5Padding";
-    private static Random randomNumbers = new Random();
-    public static void procesar(BufferedReader stdIn, BufferedReader pIn, PrintWriter pOut, HashMap<String, List<String>> hashMap, int id) throws IOException    
+    public static void procesar(BufferedReader stdIn, BufferedReader pIn, PrintWriter pOut, HashMap<String, List<String>> hashMap, int id) throws IOException
     {
-        try 
+        try
         {
             FileInputStream archivoPrivada = new FileInputStream("data/privada");
             ObjectInputStream ois = new ObjectInputStream(archivoPrivada);
-            SecretKey llavePrivada = (SecretKey) ois.readObject();
+            PrivateKey llavePrivada = (PrivateKey) ois.readObject();
             ois.close();
 
             pIn.readLine();
 
             pOut.println("ACK");
 
-            byte[] Reto = pIn.readLine().getBytes();
-            String RetoString = new String(Reto);
+            String reto = pIn.readLine();
 
-            int numeroXD = randomNumbers.nextInt(0,10);
-            if (numeroXD < 9) 
-            {
-                String cifradoAutenticacion = ManejadorSeguridad.cifrar(llavePrivada, ALGORITMO_ASIMETRICO, RetoString);     
-                pOut.println(cifradoAutenticacion);
-            }
-            else
-            {
-                pOut.println("XD");
-                System.exit(-1);
-            }
+            String cifradoAutenticacion = ManejadorSeguridad.cifrar(llavePrivada, ALGORITMO_ASIMETRICO, reto);
+            pOut.println(cifradoAutenticacion);
 
             byte[] llaveSimetricaCifrada = pIn.readLine().getBytes();
 
@@ -86,17 +75,17 @@ public class ProtocoloServidor
             String idProdString = ManejadorSeguridad.descifrar(llaveSimetrica, ALGORITMO_SIMETRICO, idProd);
 
             boolean found = false;
-            
+
             String estado = null;
-            
+
             for (Map.Entry<String, List<String>> entry : hashMap.entrySet()) {
                 List<String> values = entry.getValue();
-                if (values.contains(idProdString)) 
+                if (values.contains(idProdString))
                 {
                     estado = values.get(2);
                     pOut.println(ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, estado));
                     found = true;
-                    break; 
+                    break;
                 }
             }
 
@@ -112,14 +101,14 @@ public class ProtocoloServidor
             String HMACString = new String(Hmac);
 
             pOut.println(ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, HMACString));
-            
+
             pIn.readLine();
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             System.exit(-1);
         }
     }
-    
+
 }
