@@ -74,26 +74,19 @@ public class ProtocoloCliente {
             byte[] hmacBytes = mac.doFinal(digest);
 
             String HMACString = Base64.getEncoder().encodeToString(hmacBytes);
-
-            if (pIn.readLine().equals(HMACString)) {
-                switch (id) {
-                    case 0:
-                        System.out.println("========== Respuesta al Cliente" + " ==========");
-                        System.out.println("Estado del producto: " + respuestaEstado);
-                        System.out.println();
-                        break;
-
-                    default:
-                        System.out.println("========== Respuesta al Cliente " + id + " ==========");
-                        System.out.println("Estado del producto: " + respuestaEstado);
-                        System.out.println();
-                        break;
-                }
+            Object obj = new Object();
+            synchronized(obj)
+            {
+            if (pIn.readLine().equals(HMACString)) 
+            {
+                System.out.println("========== Respuesta al Cliente " + id + " ==========\n" + "Estado del producto: " + respuestaEstado);
+                System.out.println();
                 pOut.println("TERMINAR");
             } else {
                 System.out.println("Error en la transmision, intente de nuevo");
                 System.exit(-1);
             }
+        }
 
         } catch (Exception e) {
             e.printStackTrace();
