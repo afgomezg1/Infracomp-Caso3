@@ -49,7 +49,7 @@ public class ProtocoloCliente {
 
             pIn.readLine();
 
-            pOut.println(ManejadorSeguridad.cifrar(llaveSimetrica, ALGORITMO_SIMETRICO, numeroDocumento+";"+tipoDocumento));
+            pOut.println(ManejadorSeguridad.cifrar(llavePublica, ALGORITMO_ASIMETRICO, numeroDocumento+";"+tipoDocumento));
 
             if (pIn.readLine().equals("ERROR")) {
                 System.out.println("Error en la consulta");
