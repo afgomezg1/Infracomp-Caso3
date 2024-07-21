@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
 
@@ -65,11 +66,11 @@ public class ProtocoloCliente {
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(llaveSimetrica);
 
-            String HMACString = Base64.getEncoder().encodeToString(kBytes);
+            byte[] hmac = mac.doFinal(kBytes);
 
-            String hmacRespuesta = pIn.readLine();
+            byte[] hmacRespuesta = Base64.getDecoder().decode(pIn.readLine());
 
-            if (HMACString.equals(hmacRespuesta)) {
+            if (Arrays.equals(hmac, hmacRespuesta)) {
                 switch (id) {
                     case 0:
                         System.out.println("========== Respuesta al Cliente" + " ==========");

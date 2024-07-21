@@ -106,6 +106,7 @@ public class ProtocoloServidor
 
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(llaveSimetrica);
+            kBytes = mac.doFinal(kBytes);
 
             String HMACString = Base64.getEncoder().encodeToString(kBytes);
             pOut.println(HMACString);

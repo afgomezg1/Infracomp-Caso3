@@ -1,7 +1,6 @@
 package co.edu.uniandes.package1;
 
 import java.security.Key;
-import java.security.MessageDigest;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -37,14 +36,4 @@ public class ManejadorSeguridad {
         }
     }
 
-    public static byte[] getDigest(byte[] datos) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            digest.update(datos);
-            return digest.digest();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
-
