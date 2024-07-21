@@ -16,7 +16,7 @@ public class Servidor
 {
     public static final int PUERTO = 3400;
     public static final String SERVIDOR = "localhost";
-    private static final String dirArchivo = "data/datosServidor.txt";
+    private static final String DIR_ARCHIVO = "data/datosServidor.txt";
     private static int count;
     private static HashMap<String, List<String>> hashMap;
 
@@ -28,7 +28,7 @@ public class Servidor
 
         boolean menu = true;
         while (menu) {
-            hashMap = leerArchivo(dirArchivo);
+            hashMap = leerArchivo(DIR_ARCHIVO);
             System.out.println("Ingrese si desea correr el Servidor en modo iterativo (1) o con delegados (2): ");
             int modo = in.nextInt();
 
@@ -144,7 +144,7 @@ public class Servidor
             System.exit(-1);
         }
 
-        HashMap<String, List<String>> hashMap = leerArchivo(dirArchivo);
+        HashMap<String, List<String>> hashMap = leerArchivo(DIR_ARCHIVO);
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         for (int i = 0; i < 32; i++)
         {

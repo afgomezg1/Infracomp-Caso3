@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Cliente {
     public static final int PUERTO = 3400;
     public static final String SERVIDOR = "localhost";
-    private static final String dirArchivo = "data/datosCliente.txt";
+    private static final String DIR_ARCHIVO = "data/datosCliente.txt";
     public static void main(String[] args) throws IOException{
         System.out.println("Iniciando cliente...");
 
@@ -61,7 +61,7 @@ public class Cliente {
 		}
 
 		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        try (BufferedReader br = new BufferedReader(new FileReader(dirArchivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(DIR_ARCHIVO))) {
             String[] datos = null;
             for (int i = 0; i < 32; i++) {
                 datos = br.readLine().split(",");
@@ -86,7 +86,7 @@ public class Cliente {
 
     private static void correrClienteDelegados(int cantidadClientes) {
         ThreadCliente[] clientesDelegados = new ThreadCliente[cantidadClientes];
-        try (BufferedReader br = new BufferedReader(new FileReader(dirArchivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(DIR_ARCHIVO))) {
             String line;
             int lineaActual = 0;
             String[] datos = null;
